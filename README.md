@@ -85,7 +85,7 @@ Cuando un conjunto de usuarios consulta un enésimo número (superior a 1000000)
 12. Evalue el escenario de calidad asociado al requerimiento no funcional de escalabilidad y concluya si usando este modelo de escalabilidad logramos cumplirlo.
 13. Vuelva a dejar la VM en el tamaño inicial para evitar cobros adicionales.
 
-**Preguntas**
+### **Preguntas**
 
 1. ¿Cuántos y cuáles recursos crea Azure junto con la VM?
 2. ¿Brevemente describa para qué sirve cada recurso?
@@ -100,6 +100,20 @@ Cuando un conjunto de usuarios consulta un enésimo número (superior a 1000000)
 9. ¿Qué pasa con la infraestructura cuando cambia el tamaño de la VM? ¿Qué efectos negativos implica?
 10. ¿Hubo mejora en el consumo de CPU o en los tiempos de respuesta? Si/No ¿Por qué?
 11. Aumente la cantidad de ejecuciones paralelas del comando de postman a `4`. ¿El comportamiento del sistema es porcentualmente mejor?
+
+### **Respuestas**
+
+
+
+
+
+
+
+
+
+
+
+
 
 ### Parte 2 - Escalabilidad horizontal
 
@@ -298,6 +312,11 @@ newman run ARSW_LOAD-BALANCING_AZURE.postman_collection.json -e [ARSW_LOAD-BALAN
     **Usos Clave**  
    1. Aislamiento de Seguridad: Permite segmentar el tráfico entre subredes (por ejemplo, permitir que los servidores web accedan a los servidores de bases de datos solo en un puerto específico) y aislar el entorno de red de Internet [(Asudbring, n.d.-b)](#security).
    2. Control de Acceso: Se pueden aplicar a una Subnet completa o a una Interfaz de Red (NIC) individual. Al aplicarse a una subred, todas las máquinas virtuales dentro de esa subred heredan las reglas del NSG [(Asudbring, n.d.-b)](#security).
+
+8. Informe
+9. Diagrama de despliegue - Escalabilidad horizontal
+
+    ![deployment-diagram](images/part2/deployment-diagram.png)
 
 ### **Bibliografia**
 * <a id="comp"></a> [1] Mbender-Ms. (n.d.). Componentes de Azure Load Balancer. Microsoft Learn. https://learn.microsoft.com/es-es/azure/load-balancer/components  
