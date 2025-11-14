@@ -237,23 +237,23 @@ Usando este modelo de escalabilidad, sí se cumple el requerimiento no funcional
 
 1. Azure junto con la VM crea 6 recursos adicionales:
 
-   | Name | Type |
-       |------|------|
-   | VERTICAL-SCALABILITY | Virtual machine |
-   | vnet-eastus2 | Virtual network |
-   | VERTICAL-SCALABILITY-nsg | Network security group |
-   | VERTICAL-SCALABILITY-ip | Public IP address |
-   | vertical-scalability676 | Network interface |
-   | SCALABILITY_LAB | Resource group |
+   | **Name**                     | **Type**                  |
+   |-----------------------------|---------------------------|
+   | VERTICAL-SCALABILITY       | Virtual machine          |
+   | vnet-eastus2               | Virtual network          |
+   | VERTICAL-SCALABILITY-nsg   | Network security group   |
+   | VERTICAL-SCALABILITY-ip    | Public IP address        |
+   | vertical-scalability676    | Network interface        |
+   | SCALABILITY_LAB            | Resource group           |
 
 2. **Función de cada recurso**
 
-- **Virtual Machine**: Es el servidor virtual donde se ejecuta la aplicación.
-- **Virtual Network**: Red privada que permite la comunicación segura entre la VM y otros recursos de Azure.
-- **Network Interface**: Interfaz de red que conecta la VM a la VNet.
-- **Public IP Address**: IP pública para acceder a la VM desde Internet.
-- **Network Security Group**: Firewall que controla el tráfico de entrada/salida de la VM.
-- **Resource Group**: Contenedor lógico que agrupa todos los recursos del laboratorio.
+   - **Virtual Machine**: Es el servidor virtual donde se ejecuta la aplicación.
+   - **Virtual Network**: Red privada que permite la comunicación segura entre la VM y otros recursos de Azure.
+   - **Network Interface**: Interfaz de red que conecta la VM a la VNet.
+   - **Public IP Address**: IP pública para acceder a la VM desde Internet.
+   - **Network Security Group**: Firewall que controla el tráfico de entrada/salida de la VM.
+   - **Resource Group**: Contenedor lógico que agrupa todos los recursos del laboratorio.
 
 3. El comando npm FibonacciApp.js inicia un proceso que depende de una conexión activa para funcionar. Si dicha conexión se interrumpe, la aplicación se detiene y deja de operar.
    Es necesario crear una Inbound port rule para permitir el tráfico entrante en el puerto 3000, ya que Azure bloquea por defecto todo el tráfico de entrada, y este puerto debe estar habilitado para que la aplicación pueda ejecutarse correctamente.
@@ -290,15 +290,15 @@ Usando este modelo de escalabilidad, sí se cumple el requerimiento no funcional
 
 7. **Comparación B1ls vs B2ms**
 
-   | Característica | B1ls                            | B2ms |
-       |---------------|---------------------------------|------|
-   | **vCPUs** | 1                               | 2 |
-   | **RAM** | 0.5 GB                          | 8 GB |
-   | **Uso típico** | Pruebas básicas, microservicios | Aplicaciones de carga moderada |
-   | **Rendimiento** | Muy bajo                        | Medio-alto |
-   | **Precio** | Bajo                            | Moderado  |
+   | **Característica**    | **B1ls**                           | **B2ms**                              |
+   |------------------------|------------------------------------|----------------------------------------|
+   | **vCPUs**             | 1                                  | 2                                      |
+   | **RAM**               | 0.5 GB                              | 8 GB                                   |
+   | **Uso típico**        | Pruebas básicas, microservicios     | Aplicaciones de carga moderada        |
+   | **Rendimiento**       | Muy bajo                            | Medio-alto                             |
+   | **Precio**            | Bajo                                 | Moderado                               |
 
-**Diferencia clave**: No solo cambia el hardware, el B2ms permite más procesos concurrentes y estabilidad bajo carga, mientras que el B1ls puede bloquearse fácilmente.
+    **Diferencia clave**: No solo cambia el hardware, el B2ms permite más procesos concurrentes y estabilidad bajo carga, mientras que el B1ls puede bloquearse fácilmente.
 
 8. Aumentar el tamaño de la VM mejora el rendimiento temporalmente porque se asignan más recursos como CPU y memoria, reduciendo los tiempos de ejecución. Sin embargo, no es una solución escalable ni costo-eficiente, ya que solo beneficia a una máquina y tiene límites físicos y económicos.
    Al cambiar el tamaño de la VM, la FibonacciApp responde más rápido porque dispone de mayor capacidad de procesamiento, lo que reduce el tiempo promedio de respuesta.
@@ -316,11 +316,11 @@ Usando este modelo de escalabilidad, sí se cumple el requerimiento no funcional
 
 11. **Aumento de cantidad de ejecuciones paralelas**
 
-La VM actual no soporta bien más carga concurrente, incluso después del escalamiento vertical, ya que al aumentar las ejecuciones paralelas, la VM recibe más carga simultáneamente y como la CPU y la memoria de la VM son limitadas, esto provoca que cada request tarde más porque las solicitudes compiten por los recursos, por lo tanto, el comportamiento del sistema no es porcentualmente mejor.
-
-![Picture38.png](images/lab09/Picture38.png)
-
-![Picture39.png](images/lab09/Picture39.png)
+    La VM actual no soporta bien más carga concurrente, incluso después del escalamiento vertical, ya que al aumentar las ejecuciones paralelas, la VM recibe más carga simultáneamente y como la CPU y la memoria de la VM son limitadas, esto provoca que cada request tarde más porque las solicitudes compiten por los recursos, por lo tanto, el comportamiento del sistema no es porcentualmente mejor.
+    
+    ![Picture38.png](images/lab09/Picture38.png)
+    
+    ![Picture39.png](images/lab09/Picture39.png)
 
 ### Parte 2 - Escalabilidad horizontal
 
@@ -544,7 +544,8 @@ Se realizaron las pruebas de carga con Newman
 
 ![Picture58.png](images/lab09/Picture58.png)
 
-En la infraestructura con escalamiento vertical, las pruebas con Newman mostraron un tiempo promedio de respuesta de 15.2 s, sin fallos en las 10 peticiones, pero con una duración total mayor (2m 32.6s) y un consumo de datos de 2.09 MB; en cambio, con escalamiento horizontal (balanceo en varias VM), el tiempo promedio fue similar (15.4 s), pero la ejecución terminó más rápido (2m 13.4s) y se redujo el volumen de datos (1.88 MB), aunque se presentó 1 fallo por ECONNRESET, lo que indica que la distribución de carga mejora la velocidad global pero introduce complejidad en la conexión. En términos de costos, el escalamiento vertical implica pagar por una sola máquina más potente, mientras que el horizontal requiere varias instancias más pequeñas, lo que suele ser más eficiente para alta concurrencia porque permite repartir la carga y escalar dinámicamente, reduciendo saturación y mejorando la resiliencia del sistema.
+En la infraestructura con escalamiento vertical, las pruebas con Newman mostraron un tiempo promedio de respuesta de 15.2 s, sin fallos en las 10 peticiones, pero con una duración total mayor (2m 32.6s) y un consumo de datos de 2.09 MB; en cambio, con escalamiento horizontal (balanceo en varias VM), el tiempo promedio fue similar (15.4 s), pero la ejecución terminó más rápido (2m 13.4s) y se redujo el volumen de datos (1.88 MB), aunque se presentó 1 fallo por ECONNRESET, lo que indica que la distribución de carga mejora la velocidad global pero introduce complejidad en la conexión. 
+En términos de costos, el escalamiento vertical implica pagar por una sola máquina más potente, mientras que el horizontal requiere varias instancias más pequeñas, lo que suele ser más eficiente para alta concurrencia porque permite repartir la carga y escalar dinámicamente, reduciendo saturación y mejorando la resiliencia del sistema.
 
 #### 2.10 Pruebas con 4 Instancias Paralelas
 
